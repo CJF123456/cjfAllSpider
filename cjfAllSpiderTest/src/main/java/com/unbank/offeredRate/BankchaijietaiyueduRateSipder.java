@@ -13,7 +13,6 @@ import com.unbank.filter.URLBaseFilter;
 import com.unbank.filter.URLFilter;
 import com.unbank.store.RateValueStore;
 import com.unbank.util.MD5;
-import com.unbank.util.StringToDate;
 
 /**
  * @采集方式：页面是post提交的请求，通过post请求方式采集数据
@@ -56,8 +55,8 @@ public class BankchaijietaiyueduRateSipder {
 		headers.put("User-Agent",
 				"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0");
 		Map<String, String> params = new HashMap<String, String>();
-		StringToDate strt = new StringToDate();
-		Date date = strt.getStringToDate(strdate1);
+		/*StringToDate strt = new StringToDate();*/
+		/*Date date = strt.getStringToDate(strdate1);*/
 		params.put("searchDate", strDate);
 		String charset = "utf-8";
 		String html = postFetcher.post(url, params, headers, charset);
@@ -70,7 +69,7 @@ public class BankchaijietaiyueduRateSipder {
 			String jiaquanrate = element.select("td:nth-child(2)").text();
 			String num = element.select("td:nth-child(3)").text();
 			String money = element.select("td:nth-child(4)").text();
-			detailUrl = type + jiaquanrate + money + date;
+			detailUrl = type + jiaquanrate + money ;
 			detailUrl = md.GetMD5Code(detailUrl);
 			if (urlFilter.checkNewsURL(detailUrl)) {
 				try {
@@ -78,7 +77,7 @@ public class BankchaijietaiyueduRateSipder {
 					colums.put("type", type);
 					colums.put("jiaquanrate", jiaquanrate);
 					colums.put("money", money);
-					colums.put("date", date);
+					/*colums.put("date", date);*/
 					colums.put("num", num);
 					colums.put("detailUrl", detailUrl);
 					colums.put("crawlerTime", new Date());
